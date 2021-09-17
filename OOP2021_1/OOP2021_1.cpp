@@ -2,48 +2,58 @@
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
+#include <Utils.h>
 #include <iostream>
 #include <conio.h> // console io
 #include <cstring> // string.h
 #include <cstdlib> // stdlib.h
 #include <string> // c++ string class
 #include <Windows.h>
-#include "Utils.h"
 
-// https://github.com/beomjoo90/OOP2021 , branch: 2학기
+
+
+// https://github.com/beomjoo90/OOP2021 , 수업 끝나구 branch: 2학기 브랜치 다운받기!!
+
+const int directionToLeft = 0;
+const int directionToRight = 1;
 
 class Screen;
-class GameObject;
+class Player;
+
+
 
 class Screen {
 private:
-	int		width; // visible width
+	int		width; //visible width
+	// width +1 : // region with visible width and invisible line
 	int		height;
-	int		size;
+	int     size;
 	char*	canvas;
 
 public:
 
 	// constructor (생성자 함수) 메모리공간상에 적재되는 순간 호출되는
-	Screen(int width = 10, int height = 10) 
-		: width(width), height(height), canvas( new char[(width+1)*height])
+	Screen(unsigned int width, unsigned int height)
+		:width(width), height(height), canvas( new char[(width+1)*height])
 	{
 		bool faultyInput = false;
-		if (this->width <= 0) {
+		if (this->width == 0) {
 			this->width = 10;
 			faultyInput = true;
 		}
-		if (this->height <= 0) {
-			this->height = 10;
+		if (this->height == 0) {
+			this->height = 10 ;
 			faultyInput = true;
 		}
-		size = (this->width + 1) * this->height;
 		if (faultyInput == true) {
 			delete canvas;
-			canvas = new char[size];
+			canvas = new char[(this->width + 1) * this->height];
 		}
+		size = (this->width + 1) * this->height;
 	}
+
 	// destructor (소멸자 함수) 메모리공간상에서 없어지는 순간 호출되는 함수
+	//상속받은 객체를 업캐스팅해서 딜리트할 때 그 객체의 소멸자를 호출해야 하기 떄문!
 	virtual ~Screen()
 	{
 		delete[] canvas;
@@ -51,30 +61,28 @@ public:
 		width = 0; height = 0;
 	}
 
-	int getWidth()
-	{
-		return width;
-	}
-
 	void clear()
 	{
 		memset(canvas, ' ', size);
+		for (int h = 0; h < height; h++)
+			canvas[(width+1) * (h+1)-1] = '\n'; //이거 왜 그런지 계산.식 왜그런지
+		canvas[size - 1] = '\0';
 	}
-	void draw(const Position& pos, const char* shape, const Dimension& sz = Position{ 1, 1 } )
+
+	//원하는 위체에 원하는 사이즈로 draw
+	void draw(const Position pos, const char* shape, const Dimension sz)
 	{
 		int offset = (width + 1) * pos.y + pos.x;
-		for (int h = 0; h < sz.y; h++)
-			strncpy(&canvas[offset + (width + 1) * h], &shape[h * sz.x], sz.x);
+
+		for (int h = 0; h < sz.y; h++)		
+			strncpy(&canvas[offset + (width + 1) * h], &shape[h * (sz.x + 1), sz.x]);
+		
 	}
+
 	void render()
 	{
-		Borland::gotoxy(0, 0);
-		for (int h = 0; h < height; h++)
-			canvas[(width + 1) * (h + 1) - 1] = '\n';
-		canvas[size - 1] = '\0';
-		printf("%s", canvas);
+		for(int h =0;h<height;h++)
 	}
-	
 };
 class GameObject
 {
@@ -95,13 +103,16 @@ public:
 	virtual ~GameObject() {}
 
 	void move(int direction)
-	{	
+	{
+		direction == directionToRight ? pos++: pos--;
 	}
 	void move()
-	{	
+	{
+		(direction == directionToLeft) ? --pos : ++pos;
 	}
 	virtual void draw()
-	{	
+	{
+		screen->draw(pos, face);
 	}
 	virtual void update() {}
 
@@ -119,26 +130,27 @@ public:
 };
 
 
+
 int main()
 {	
 	int major;
 	int minor;
 
-	Screen  screen(20, 10);
-	Position pos{ 1, 2 };
-	char shape[] = "**    **     **";
-	Dimension sz{ (int)strlen(shape), 1 };
+	Screen  screen(3,3);
+	Position pos{ 0, 1 };
+	Dimension sz{ 2,2 };
+
+	
+	// game loop
 
 	bool isLooping = true;
 	while (isLooping) {
-		screen.clear();
+		screen.clear();		  		
 
-		screen.draw(pos, shape, sz);
 
 		screen.render();
 		Sleep(100);
 
-		pos.x = (pos.x + 1) % (screen.getWidth());
 		
 	}
 	printf("\nGame Over\n");
