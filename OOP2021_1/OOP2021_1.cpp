@@ -33,7 +33,7 @@ private:
 public:
 
 	// constructor (생성자 함수) 메모리공간상에 적재되는 순간 호출되는
-	Screen(unsigned int width, unsigned int height)
+	Screen(int width,int height)
 		:width(width), height(height), canvas( new char[(width+1)*height])
 	{
 		bool faultyInput = false;
@@ -45,11 +45,12 @@ public:
 			this->height = 10 ;
 			faultyInput = true;
 		}
+		size = (this->width + 1) * this->height;
 		if (faultyInput == true) {
 			delete canvas;
-			canvas = new char[(this->width + 1) * this->height];
+			canvas = new char[size];
 		}
-		size = (this->width + 1) * this->height;
+		
 	}
 
 	// destructor (소멸자 함수) 메모리공간상에서 없어지는 순간 호출되는 함수
@@ -61,28 +62,42 @@ public:
 		width = 0; height = 0;
 	}
 
+	int getWidth()
+	{
+		return width;
+	}
+
 	void clear()
 	{
 		memset(canvas, ' ', size);
 		for (int h = 0; h < height; h++)
-			canvas[(width+1) * (h+1)-1] = '\n'; //이거 왜 그런지 계산.식 왜그런지
+			canvas[(width+1) * (h+1)-1] = '\n'; //이거 왜 그런지 계산.식 왜그런지-> 수열을 활용한 일반항 계산으로 도출.
 		canvas[size - 1] = '\0';
 	}
 
 	//원하는 위체에 원하는 사이즈로 draw
-	void draw(const Position pos, const char* shape, const Dimension sz)
+	void draw(const Position& pos, const char* shape, const Dimension& sz = Position{ 1, 0 })
 	{
 		int offset = (width + 1) * pos.y + pos.x;
 
-		for (int h = 0; h < sz.y; h++)		
-			strncpy(&canvas[offset + (width + 1) * h], &shape[h * (sz.x + 1), sz.x]);
-		
+		for (int h = 0; h < sz.y; h++)
+			strncpy(&canvas[offset+ (width+1)*h], &shape[h * sz.x],sz.x);
+	
 	}
 
 	void render()
 	{
-		for(int h =0;h<height;h++)
+		for (int h = 0; h < height; h++)
+			canvas[(width + 1) * ( h  +  1 )  -  1] = '\n';
+		canvas[size-1] = '\0'; //render screen
+		printf("%s", canvas);
+		Borland::gotoxy(0, 0);
 	}
+
+	//Position sz = { 1 , 2 } 같은 형태도 가능하지만
+	// 
+	//Position sz = Position{ 1, 2 };//Position이라는 클래스의 생성자 함수를 호출한다는 의미 표현으로 이 방식이 더 나음.직관적인 이해가 더 쉬움
+	//Temporary 오브젝트를 만들때 이런 방식을 이용. sz라는데에 복사해라_복사생성자 함수 호출.
 };
 class GameObject
 {
@@ -104,15 +119,12 @@ public:
 
 	void move(int direction)
 	{
-		direction == directionToRight ? pos++: pos--;
 	}
 	void move()
 	{
-		(direction == directionToLeft) ? --pos : ++pos;
 	}
 	virtual void draw()
 	{
-		screen->draw(pos, face);
 	}
 	virtual void update() {}
 
@@ -136,22 +148,22 @@ int main()
 	int major;
 	int minor;
 
-	Screen  screen(3,3);
-	Position pos{ 0, 1 };
-	Dimension sz{ 2,2 };
-
-	
+	Screen  screen(20,10);
+	Position pos{ 0 ,0 };
+	Dimension sz{  2 , 3 };
+	char shape[] = "■■■ "; //■는 2칸을 차지하기 때문에 추가적인 연산이 필요하다.
 	// game loop
 
 	bool isLooping = true;
 	while (isLooping) {
-		screen.clear();		  		
+		screen.clear();	
 
+		screen.draw(pos, shape, sz);
 
 		screen.render();
 		Sleep(100);
 
-		
+		pos.x = (pos.x + 1) % (screen.getWidth());
 	}
 	printf("\nGame Over\n");
 

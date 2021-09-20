@@ -12,13 +12,7 @@ struct Position {
 	Position(int x = 0, int y = 0) :x(x), y(y) {}//Default 값이 매개변수에 있다.
 };
 
-typedef Dimension()
-{
-	int x;
-	int y;
-	Dimension(int x = 0, int y = 0) :x(x), y(y) {}//Default 값이 매개변수에 있다.
-
-}
+typedef Position Dimension;//이거무슨문법?
 
 class Borland {
 
