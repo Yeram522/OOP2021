@@ -13,6 +13,13 @@
 
 // https://github.com/beomjoo90/OOP2021 , branch: 2학기
 
+// singleton 패턴
+// object instance가 단 하나만 존재
+// 1. 생성자 함수에 외부에 숨겨라 -> 생성자 함수를 private 함수로
+// 2. 해당 object instance가 저장될 수 있도록 클래스내에 선언해야 함.
+//   static ClassName* instance 선언 그리고 외부에 해당 static 포인터 변수 초기화
+// 3. static ClassName* GetInstance 선언하고 정의
+
 //forward declaration
 class Screen;
 class GameObject;
@@ -23,13 +30,11 @@ private:
 	int		width; // visible width
 	int		height;
 	int		size;
-	char*	canvas;
-
-public:
+	char* canvas;
 
 	// constructor (생성자 함수) 메모리공간상에 적재되는 순간 호출되는
-	Screen(int width = 10, int height = 10) 
-		: width(width), height(height), canvas( new char[(width+1)*height])
+	Screen(int width = 10, int height = 10)
+		: width(width), height(height), canvas(new char[(width + 1) * height])
 	{
 		bool faultyInput = false;
 		if (this->width <= 0) {
@@ -52,6 +57,17 @@ public:
 		delete[] canvas;
 		canvas = nullptr;
 		width = 0; height = 0;
+	}
+
+	static Screen* Instance;
+
+public:
+
+	static Screen* GetInstance() {
+		if (Instance == nullptr) {
+			Instance = new Screen(20, 10);
+		}
+		return Instance;
 	}
 
 	int getWidth() const
@@ -96,38 +112,38 @@ public:
 };
 
 class Input {//static 변수는 class 내부에서 선언할 수 없다. 반드시 내부에서 선언 해주어야 함.
-	static DWORD cNumRead, fdwMode, i;
-	static INPUT_RECORD irInBuf[128];
-	static int counter;
-	static HANDLE hStdin;
-	static DWORD fdwSaveOldMode;
+	DWORD cNumRead, fdwMode, i;
+	INPUT_RECORD irInBuf[128];
+	int counter;
+	HANDLE hStdin;
+	DWORD fdwSaveOldMode;
 
-	static char blankChars[80];
+	char blankChars[80];
 
-	static void ErrorExit(const char*);
-	static void KeyEventProc(KEY_EVENT_RECORD);
-	static void MouseEventProc(MOUSE_EVENT_RECORD);
-	static void ResizeEventProc(WINDOW_BUFFER_SIZE_RECORD);
+	void errorExit(const char*);
+	void keyEventProc(KEY_EVENT_RECORD);
+	void mouseEventProc(MOUSE_EVENT_RECORD);
+    void resizeEventProc(WINDOW_BUFFER_SIZE_RECORD);
 
+	static Input* instance;//[1]한개의 instance를 만들어라.
 
-public:
-	static void Initialize()
+	Input()
 	{
 		memset(blankChars, ' ', 80);
 		blankChars[79] = '\0';
 
 		hStdin = GetStdHandle(STD_INPUT_HANDLE);
 		if (hStdin == INVALID_HANDLE_VALUE)
-			ErrorExit("GetStdHandle");
+			errorExit("GetStdHandle");
 		if (!GetConsoleMode(hStdin, &fdwSaveOldMode))
-			ErrorExit("GetConsoleMode");
+			errorExit("GetConsoleMode");
 		/*
 			   Step-1:
 			   Disable 'Quick Edit Mode' option programmatically
 		 */
 		fdwMode = ENABLE_EXTENDED_FLAGS;
 		if (!SetConsoleMode(hStdin, fdwMode))
-			ErrorExit("SetConsoleMode");
+			errorExit("SetConsoleMode");
 		/*
 		   Step-2:
 		   Enable the window and mouse input events,
@@ -136,14 +152,27 @@ public:
 		*/
 		fdwMode = ENABLE_WINDOW_INPUT | ENABLE_MOUSE_INPUT;
 		if (!SetConsoleMode(hStdin, fdwMode))
-			ErrorExit("SetConsoleMode");
-
+			errorExit("SetConsoleMode");
+	
 	}
-	static void Deinitialize()
+
+	~Input()
 	{
 		SetConsoleMode(hStdin, fdwSaveOldMode);
 	}
-	static void ReadInputs()
+
+public:
+
+	static Input* GetInstance()//[2] 값을 얻게해주는 함수를 외부에 하나 노출시켜라.원하는 시점에 해당되는 인스턴스를 얻게 하라. 
+	{
+		if (instance == nullptr)
+		{
+			instance = new Input();
+		}
+		return instance;
+	}
+
+	void readInputs()
 	{
 		if (!GetNumberOfConsoleInputEvents(hStdin, &cNumRead)) {
 			cNumRead = 0;
@@ -159,7 +188,7 @@ public:
 			irInBuf,     // buffer to read into
 			128,         // size of read buffer
 			&cNumRead)) // number of records read
-			ErrorExit("ReadConsoleInput");
+			errorExit("ReadConsoleInput");
 		// Dispatch the events to the appropriate handler.
 #ifdef NOT_COMPILE
 		for (int i = 0; i < cNumRead; i++)
@@ -196,17 +225,13 @@ public:
 	}//헤더파일: 클래스 선언, cpp: 구현 하지만 그 두방식은 컴파일러는 다르게 취급한다. 함수의 선언과 정의가 동시에 되면-> 인라인 멤버함수/인라인 함수(inline)
 	//inline: 호출했을 때 함수 바디에 해당되는 내용을 그대로 컴파일러가 복사해서 다시 타이핑해서 사용한다. 일반적인 함수 호출은 스택프레임이라는 공간이 생기고 함수가 종료될떄
 	//사라지는데, 인라인은 스택프레임이ㅣ 생기지 않는다.
-	static bool GetKeyDown(WORD virtualkeycode);
-	static bool GetKey(WORD virtualkeycode);
-	static bool GetKeyUp(WORD virtualKeyCode);
+	bool getKeyDown(WORD virtualkeycode);
+	bool getKey(WORD virtualkeycode);
+	bool getKeyUp(WORD virtualKeyCode);
 };
  
-DWORD Input::cNumRead, Input::fdwMode;//전역변수는 굳이 초기화하지 않아도 자동으로 0으로 초기화가 된다.
-INPUT_RECORD Input::irInBuf[128];
-int Input::counter;
-HANDLE Input::hStdin;
-DWORD Input::fdwSaveOldMode;
-char Input::blankChars[80];
+
+Input* Input::instance = nullptr;
 
 class GameObject
 {
@@ -215,10 +240,10 @@ private:
 	Position pos{ 1,2 };
 	Dimension dim;
 	Screen* screen;
-
+	Input* input;
 public:
-	GameObject(Screen* screen, const char* face, const Position& pos, Dimension dim)
-		: pos(pos), screen(screen), dim(dim)
+	GameObject(const char* face, const Position& pos, Dimension dim)
+		: pos(pos), screen(Screen::GetInstance()), dim(dim), input(Input::GetInstance())
 	{
 		setFace(face);
 	}
@@ -237,11 +262,11 @@ public:
 	virtual void update() 
 	{
 		//pos.x = (pos.x + 1) % (screen->getWidth());
-		if (Input::GetKeyDown(VK_LEFT)) {
+		if (input->getKey(VK_LEFT)) {
 			if (pos.x <= 0) return;
 			pos.x = (pos.x - 1) % (screen->getWidth());
 		}
-		if (Input::GetKeyDown(VK_RIGHT)) {
+		if (input->getKey(VK_RIGHT)) {
 			if (pos.x >= (screen->getWidth() - 1)) return;
 			pos.x = (pos.x + 1) % (screen->getWidth());
 		}
@@ -262,38 +287,37 @@ public:
 
 int main()
 {	
-	Screen  screen(20, 10);
+	Screen*  screen = Screen::GetInstance();
 	Position pos{ 1, 2 };
 	const char shape[] = "**    **     **";
 	Dimension sz{ (int)strlen(shape), 1 };
-	GameObject one{ &screen ,shape, pos,sz };
+	GameObject one{shape, pos,sz };
 	
+	Input* Instance = Input::GetInstance();
 
-	// Get the standard inp
-	Input::Initialize();	   	
+	// Get the standard inp   	
 
 	bool isLooping = true;
 	while (isLooping) {
 	
-		screen.clear();
+		screen->clear();
 		one.draw();
 
-		Input::ReadInputs();
+		Instance->readInputs();
 
 		one.update();
 
-		screen.render();
+		screen->render();
 		Sleep(100);
 		
 	}
 	printf("\nGame Over\n");
 
-	Input::Deinitialize();//~소멸자함수랑 비슷
 
 	return 0;
 }
 
-void Input::ErrorExit(const char* lpszMessage)
+void Input::errorExit(const char* lpszMessage)
 {
 	fprintf(stderr, "%s\n", lpszMessage);
 	
@@ -304,23 +328,13 @@ void Input::ErrorExit(const char* lpszMessage)
 	ExitProcess(0);
 }
 
-bool Input::GetKeyDown(WORD virtualKeyCode)//어떻게 구현? 과제.???
+bool Input::getKeyDown(WORD virtualKeyCode)//어떻게 구현? 과제.???
 {
-	if (cNumRead == 0) return false;
-
-	for (int i = 0; i < cNumRead; i++)
-	{
-		if (irInBuf[i].EventType != KEY_EVENT) continue;
-
-		if (irInBuf[i].Event.KeyEvent.wVirtualKeyCode == virtualKeyCode &&
-			irInBuf[i].Event.KeyEvent.bKeyDown == TRUE) {
-			return true;
-		}
-	}
-	return false;
+	//TODO: Not Fully Inplement Yet
+	return getKey(virtualKeyCode);
 }
 
-bool Input::GetKey(WORD virtualKeyCode)
+bool Input::getKey(WORD virtualKeyCode)
 {
 	if (cNumRead == 0) return false;
 
@@ -336,7 +350,7 @@ bool Input::GetKey(WORD virtualKeyCode)
 	return false;
 }
 
-bool Input::GetKeyUp(WORD virtualKeyCode)
+bool Input::getKeyUp(WORD virtualKeyCode)
 {
 	if (cNumRead == 0) return false;
 
@@ -352,7 +366,7 @@ bool Input::GetKeyUp(WORD virtualKeyCode)
 	return false;
 }
 
-void Input::KeyEventProc(KEY_EVENT_RECORD ker)
+void Input::keyEventProc(KEY_EVENT_RECORD ker)
 {
 	Borland::gotoxy(0, 11);
 	printf("%s\r", blankChars);
@@ -382,7 +396,7 @@ void Input::KeyEventProc(KEY_EVENT_RECORD ker)
 	Borland::gotoxy(0, 0);
 }
 
-void Input::MouseEventProc(MOUSE_EVENT_RECORD mer)
+void Input::mouseEventProc(MOUSE_EVENT_RECORD mer)
 {
 	Borland::gotoxy(0, 12);
 	printf("%s\r", blankChars);
@@ -426,7 +440,7 @@ void Input::MouseEventProc(MOUSE_EVENT_RECORD mer)
 	Borland::gotoxy(0, 0);
 }
 
-void Input::ResizeEventProc(WINDOW_BUFFER_SIZE_RECORD wbsr)
+void Input::resizeEventProc(WINDOW_BUFFER_SIZE_RECORD wbsr)
 {
 	Borland::gotoxy(0, 13);
 	printf("%s\r", blankChars);
