@@ -29,7 +29,8 @@ public:
 	}
 
 	EventType getCurrentEvenetType() { return currentEventType; };
-	void setCurrentEventTyep(const EventType eventtype) { currentEventType = eventtype; }
+	void setCurrentEventType(const EventType eventtype = EventType::nothing) 
+	{ currentEventType = eventtype; }
 
 
 	void startEvent(EventType eventtype)

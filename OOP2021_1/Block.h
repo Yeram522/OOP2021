@@ -98,10 +98,8 @@ public:
 		}
 	}
 
-	void stop() override
-	{
-		speed = 0;
-	}
+	void move() override  { speed = 0.1f; }
+	void stop() override  { speed = 0;}
 
 	void draw() override
 	{	

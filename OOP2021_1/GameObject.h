@@ -68,6 +68,7 @@ public:
 	}
 
 	virtual void move(const Position& offset) {}
+	virtual void move() {}
 	virtual void stop() {}
 
 	// utility functions
@@ -91,6 +92,12 @@ public:
 		this->parent = parent;
 		setParentWorldPos(parent ? parent->local2Screen() : Position::zeros);
 		for (auto child : children) child->updatePos(true);
+	}
+
+	GameObject* getParent()
+	{
+		if (parent==nullptr) return nullptr;
+		return parent;
 	}
 
 	GameObject* getfirstChild()

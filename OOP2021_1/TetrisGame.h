@@ -44,6 +44,8 @@ public:
     bool isGameStop() const { return isPause; }
 
     void update() override {
+        EventType eventType = eventsystem->getCurrentEvenetType();
+
         if (isPause == true)
         {
             map->getfirstChild()->stop();
@@ -55,8 +57,12 @@ public:
         
         if (input->getKey(VK_ESCAPE))
         {
+            
             if (confirmationpanel != nullptr)
             {
+                confirmationpanel->setActive(true);
+                confirmationpanel->getParent()->setActive(true);
+                isPause == true;
                 return;
             }
             confirmationpanel = new ConfirmationPanel(Position{ 0,0 }, new Panel{ "ConfirmationPanel", Position{25,10 },  20, 10, this });
@@ -64,6 +70,26 @@ public:
             new Button{Position{0,0},EventType::continueGame,new Panel{"Continue", Position{5,7}, 10, 2, confirmationpanel}};
 
             isPause = true;
+        }
+
+        if (eventType != EventType::nothing) //Event가 들어오면,
+        {     
+            switch (eventType)
+            {
+            case EventType::exitGame:
+                isCompleted = true;
+                confirmationpanel->setActive(false);
+                confirmationpanel->getParent()->setActive(false);
+                eventsystem->setCurrentEventType();
+                break;
+            case EventType::continueGame:
+                isPause = false;
+                map->getfirstChild()->move();
+                confirmationpanel->setActive(false);
+                confirmationpanel->getParent()->setActive(false);
+                eventsystem->setCurrentEventType();
+                break;
+            }
         }
             
     }
