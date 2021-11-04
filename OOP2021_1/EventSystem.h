@@ -51,19 +51,14 @@ public:
 	{}
 
 	template <> void startEvent<EventType::exitGame>() 
-	{
-		Borland::gotoxy(0, 36);
-		cout << "extitGameEventStart" << endl;
+	{		
+		//cout << "extitGameEventStart" << endl;
 		currentEventType = EventType::exitGame;
-		Borland::gotoxy(0, 0);
 	}
 	template <> void startEvent<EventType::continueGame>() 
 	{
-		Borland::gotoxy(0, 36);
-		cout << "continueGameEventStart" << endl;
-		currentEventType = EventType::continueGame;
-		Borland::gotoxy(0, 0);
-	
+		//cout << "continueGameEventStart" << endl;
+		currentEventType = EventType::continueGame;	
 	}
 };
 
