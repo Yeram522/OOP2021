@@ -4,19 +4,25 @@
 #include "Block.h"
 #include "Score.h"
 #include "Map.h"
+#include "ConfirmationPanel.h"
+#include "Button.h"
 
 class TetrisGame :
     public Panel
 {
     bool        isCompleted;
+    bool        isPause;
+    ConfirmationPanel* confirmationpanel;
     Score*      score;  // cache
     Map*        map;    // cache
+    
 
 public:
     TetrisGame() 
         : Panel("", Position{ 1, 1 }, 77, 30, nullptr), 
-        isCompleted(false), score(nullptr)
+        isCompleted(false), isPause(false), score(nullptr), confirmationpanel(nullptr)
     {
+        
         map = new Map{ Position{5,5}, 10, 20, this };
         auto block = new Block{ " \xdb \xdb\xdb\xdb", 
             Position{5,0},
@@ -27,19 +33,39 @@ public:
         score = new Score{ Position{4, 2}, 
             new Panel{ " Score", Position{25, 20}, 10, 5, this } 
         }; // create a ScorePanel and make a "score" its child.
+
+        
+
         map->setScore(score);
         block->setMap(map);
     }
 
     bool isGameOver() const { return isCompleted; }
+    bool isGameStop() const { return isPause; }
 
     void update() override {
+        if (isPause == true)
+        {
+            map->getfirstChild()->stop();
+        }
         if (map->isDone()) {
             isCompleted = true;
             return;
         }
-        if (input->getKey(VK_ESCAPE)) 
-            isCompleted = true;
+        
+        if (input->getKey(VK_ESCAPE))
+        {
+            if (confirmationpanel != nullptr)
+            {
+                return;
+            }
+            confirmationpanel = new ConfirmationPanel(Position{ 0,0 }, new Panel{ "ConfirmationPanel", Position{25,10 },  20, 10, this });
+            new Button{Position{0,0},EventType::exitGame,new Panel{"==Exit", Position{5,2}, 10,2, confirmationpanel}};
+            new Button{Position{0,0},EventType::continueGame,new Panel{"Continue", Position{5,7}, 10, 2, confirmationpanel}};
+
+            isPause = true;
+        }
+            
     }
 };
 

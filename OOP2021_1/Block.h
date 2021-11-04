@@ -98,6 +98,11 @@ public:
 		}
 	}
 
+	void stop() override
+	{
+		speed = 0;
+	}
+
 	void draw() override
 	{	
 		if (interactable == true) {

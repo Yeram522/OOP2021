@@ -5,6 +5,7 @@
 #include <algorithm>
 #include "Screen.h"
 #include "Input.h"
+#include "EventSystem.h"
 
 using namespace std;
 
@@ -27,6 +28,8 @@ protected:
 	Screen*				screen;
 	Input*				input;
 
+	EventSystem* eventsystem;
+
 	vector<GameObject*> children;
 	GameObject*			parent;
 	Dimension			dim;
@@ -44,7 +47,8 @@ public:
 		: pos(pos), dim(dim), capacity((size_t)dim.x* dim.y),
 		shape{ new char[(size_t)dim.x * dim.y] }, active(true),
 		screen(Screen::GetInstance()), input(Input::GetInstance()), dirty(false), 
-		parent(parent), parentWorldPos(parent ? parent->local2Screen() : Position::zeros)
+		parent(parent), parentWorldPos(parent ? parent->local2Screen() : Position::zeros),
+		eventsystem(EventSystem::GetInstance())
 	{
 		if (parent) parent->add(this);
 		setShape(face);
@@ -64,6 +68,7 @@ public:
 	}
 
 	virtual void move(const Position& offset) {}
+	virtual void stop() {}
 
 	// utility functions
 
@@ -88,6 +93,12 @@ public:
 		for (auto child : children) child->updatePos(true);
 	}
 
+	GameObject* getfirstChild()
+	{
+		if (children.empty()) return nullptr;
+		return children.front();
+	}
+
 	Position screen2local(const Position& screenPos) const {
 		Position pos = local2Screen();
 		return Position{ screenPos.x - pos.x, screenPos.y - pos.y };
@@ -103,6 +114,8 @@ public:
 	void setDimension(const Dimension& dim) { this->dim = dim; }	
 	
 	const char* getShape() const { return shape; }
+
+
 	void setShape(const char* face) {
 		if (face == nullptr || face[0] == '\0') {
 			memset(shape, ' ', sizeof(char) * capacity);
@@ -115,6 +128,7 @@ public:
 		this->shape[offset] = shape;
 	}
 	void setShape(char shape, const Position& pos) { setShape(shape, pos2Offset(pos)); }
+	void setShape() { memset(shape, ' ', capacity); }
 
 	void updatePos(bool dirty = false) {
 		bool inheritedDirty = dirty;
