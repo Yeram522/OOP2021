@@ -170,6 +170,7 @@
     <ClInclude Include="Borland.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="ConfirmationPanel.h" />
+    <ClInclude Include="Data.h" />
     <ClInclude Include="EventSystem.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Input.h" />

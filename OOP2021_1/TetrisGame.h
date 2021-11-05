@@ -7,6 +7,7 @@
 #include "ConfirmationPanel.h"
 #include "Button.h"
 
+
 class TetrisGame :
     public Panel
 {
@@ -24,6 +25,7 @@ public:
     {
         
         map = new Map{ Position{5,5}, 10, 20, this };
+       
         auto block = new Block{ " \xdb \xdb\xdb\xdb", 
             Position{5,0},
             Dimension{3, 2},
@@ -42,6 +44,10 @@ public:
 
     bool isGameOver() const { return isCompleted; }
     bool isGameStop() const { return isPause; }
+    void loadData()
+    {
+        map->loadMapData();
+    }
 
     void update() override {
         EventType eventType = eventsystem->getCurrentEvenetType();

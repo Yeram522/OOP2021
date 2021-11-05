@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Panel.h"
 #include "Score.h"
+#include "Data.h"
 
 class Map : public Panel {
 	bool*		map;
@@ -102,6 +103,21 @@ public:
 			}
 		}
 		if (pos.y < upper) upper = pos.y;
+	}
+
+	void loadMapData()
+	{
+		if (!isValidFile()) return;
+		setShape(loadMapdata());
+		
+		for (int i = 0; i < dim.x * dim.y; i++)
+			if (getShape()[i] != ' ')
+			{
+				map[i] = true;
+				cout << map[i] << endl;
+			}
+				
+
 	}
 
 	void draw()

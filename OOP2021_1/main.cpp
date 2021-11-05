@@ -19,6 +19,8 @@ int main()
 	auto input = Input::GetInstance();
 	auto tetris = new TetrisGame;
 
+	tetris->loadData();
+
 	while (tetris->isGameOver() == false) 
 	{
 		screen->clear();
