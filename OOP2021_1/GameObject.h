@@ -121,6 +121,7 @@ public:
 	void setDimension(const Dimension& dim) { this->dim = dim; }	
 	
 	const char* getShape() const { return shape; }
+	const char getShape(const Position& pos) const { return shape[pos2Offset(pos)]; }
 
 
 	void setShape(const char* face) {

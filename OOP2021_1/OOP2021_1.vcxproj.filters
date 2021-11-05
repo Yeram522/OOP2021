@@ -36,22 +36,13 @@
     <ClCompile Include="Borland.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Panel.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Block.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Score.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="TetrisGame.cpp">
+    <ClCompile Include="TetrisMapMaker.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="EventSystem.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Button.cpp">
+    <ClCompile Include="Panel.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -74,25 +65,19 @@
     <ClInclude Include="Borland.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Panel.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Block.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Score.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="TetrisGame.h">
+    <ClInclude Include="TetrisMapMaker.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Button.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="ConfirmationPanel.h">
+    <ClInclude Include="EventSystem.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="EventSystem.h">
+    <ClInclude Include="Panel.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Data.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

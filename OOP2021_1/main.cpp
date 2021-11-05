@@ -4,10 +4,7 @@
 
 #include "Position.h"
 #include "Input.h"
-#include "Score.h"
-#include "Block.h"
-#include "Panel.h"
-#include "TetrisGame.h"
+#include "TetrisMapMaker.h"
 
 using namespace std;
 
@@ -17,23 +14,23 @@ int main()
 {
 	auto screen = Screen::GetInstance();
 	auto input = Input::GetInstance();
-	auto tetris = new TetrisGame;
+	auto mapmaker = new TetrisMapMaker;
 
-	while (tetris->isGameOver() == false) 
+	while (mapmaker->isGameOver() == false) 
 	{
 		screen->clear();
 		input->readInputs();
 
-		tetris->internalUpdate();
-		tetris->updatePos(false); // the location of the root game object won't be changed.
-		tetris->internalDraw();
+		mapmaker->internalUpdate();
+		mapmaker->updatePos(false); // the location of the root game object won't be changed.
+		mapmaker->internalDraw();
 
 		screen->render();
 
 		Sleep(100);
 	}
 
-	delete tetris;
+	delete mapmaker;
 
 	return 0;
 }

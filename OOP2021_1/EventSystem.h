@@ -10,7 +10,8 @@ using namespace std;
 enum class EventType {
 	nothing,
 	exitGame,
-	continueGame
+	saveGame,
+	loadData
 };
 
 
@@ -40,8 +41,11 @@ public:
 		case EventType::exitGame:
 			startEvent<EventType::exitGame>();
 			break;
-		case EventType::continueGame:
-			startEvent<EventType::continueGame>();
+		case EventType::saveGame:
+			startEvent<EventType::saveGame>();
+			break;
+		case EventType::loadData:
+			startEvent<EventType::loadData>();
 			break;
 		}
 	}
@@ -55,10 +59,15 @@ public:
 		//cout << "extitGameEventStart" << endl;
 		currentEventType = EventType::exitGame;
 	}
-	template <> void startEvent<EventType::continueGame>() 
+	template <> void startEvent<EventType::saveGame>() 
 	{
 		//cout << "continueGameEventStart" << endl;
-		currentEventType = EventType::continueGame;	
+		currentEventType = EventType::saveGame;	
+	}
+	template <> void startEvent<EventType::loadData>()
+	{
+		//cout << "continueGameEventStart" << endl;
+		currentEventType = EventType::loadData;
 	}
 };
 
