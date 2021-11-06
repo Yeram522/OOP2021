@@ -72,7 +72,7 @@ public:
 		if (pos.y + h >= height) return true;
 
 		int next = pos.y + h;
-		if (next < upper) return false;
+		//if (next < upper) return false;
 		int capacity = getCapacity();
 		for (int j = 0; j < w; j++) {
 			int i = 0;
