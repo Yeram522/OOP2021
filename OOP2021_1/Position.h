@@ -52,7 +52,6 @@ struct Position
 
 	Position& operator()(const Position& pos)
 	{
-
 		return *this;
 	}
 
@@ -73,7 +72,7 @@ struct Position
 		return other;
 	}
 
-	friend Position operator*(Position& other, int n)
+	friend Position operator*(Position& other, const int n)
 	{
 		other.x = n * other.x;
 		other.y = n * other.y;

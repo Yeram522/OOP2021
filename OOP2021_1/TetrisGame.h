@@ -68,7 +68,7 @@ public:
             {
                 confirmationpanel->setActive(true);
                 confirmationpanel->getParent()->setActive(true);
-                isPause == true;
+                isPause = true;
                 return;
             }
             confirmationpanel = new ConfirmationPanel(Position{ 0,0 }, new Panel{ "ConfirmationPanel", Position{25,10 },  20, 10, this });
