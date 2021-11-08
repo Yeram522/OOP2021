@@ -15,22 +15,19 @@ using namespace std;
 
 int main()
 {
-	Position p1{ 1,2 };
-	Position p2{ 2,3 };
+	//Position p1{ 1,2 };
+	//Position p2{ 2,3 };
 
-	//p1 += p2; // p1 will be {3,5}
+	////p1 += p2; // p1 will be {3,5}
 
-	auto p3 = 3 * (p1 + p2) - p2 * 2;  // p3 will be {11,18}
+	//auto p3 = 3 * (p1 + p2) - p2 * 2;  // p3 will be {11,18}
 
-	cout <<"p1" << p1 << endl;
-	cout << "p3" <<p3 << endl;
+	//cout <<"p1" << p1 << endl;
+	//cout << "p3" <<p3 << endl;
 	
-
-	
-
 
 	//game
-	/*auto screen = Screen::GetInstance();
+	auto screen = Screen::GetInstance();
 	auto input = Input::GetInstance();
 	auto tetris = new TetrisGame;
 
@@ -52,5 +49,5 @@ int main()
 
 	delete tetris;
 
-	return 0;*/
+	return 0;
 }
