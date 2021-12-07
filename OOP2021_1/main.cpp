@@ -22,9 +22,11 @@ int main()
 	auto screen = Screen::GetInstance();
 	auto input = Input::GetInstance();
 	auto sceneManager = SceneManager::GetInstance();
-	auto tetris = new TetrisGame(sceneManager->getSceneCount());
 	auto main = new MainScene(sceneManager->getSceneCount());
+	auto tetris = new TetrisGame(sceneManager->getSceneCount());
+	
 	sceneManager->createScene(main);
+	sceneManager->createScene(tetris);
 
 	sceneManager->enableScene((Scene*)main);
 	while (tetris->isGameOver() == false) 

@@ -4,26 +4,24 @@
 #include "GameObject.h"
 #include "Position.h"
 #include "Renderer.h"
+#include "Component.h"
 #include <functional>
 
 using namespace std;
 
 class Button : public Renderer
 {
-	function<void(void)> onClick;
 	string text;
 protected:
 	Input* input;
 public:
+	function<void(void)> onClick;
+
 	Button(GameObject* gameObject)
 		:Renderer(gameObject, nullptr, gameObject->getRenderer()->getDimension() + Position::ones) {}
 	
 	void setText(const string& text) { this->text = text; }
-
-	void isButtonDown(std::function<void(void)> onClick = []() {})
-	{
-		this->onClick = onClick;
-	}
+	string& getText() { return text; }
 
 	void draw() override {
 		Position pos = transform->local2World();
@@ -34,18 +32,13 @@ public:
 
 	bool isInside(const Position& pos)
 	{
-		return gameObject->getTransform()->getPosition().x < pos.x
+		/*return gameObject->getTransform()->getPosition().x < pos.x
 			&& pos.x < Renderer::getTransform()->getPosition().x + Renderer::getWidth() &&
 			gameObject->getTransform()->getPosition().y < pos.y
-			&& pos.x < Renderer::getTransform()->getPosition().y + Renderer::getHeight();
+			&& pos.x < Renderer::getTransform()->getPosition().y + Renderer::getHeight();*/
+		return true;
 	}
 
-
-	void update() override {
-		/*if (!input->getMouseButtonDown(1))return;
-		auto pos = input->getMousePosition();
-		if (isInside(pos)) onClick();*/
-		
-	}
+	
 };
 

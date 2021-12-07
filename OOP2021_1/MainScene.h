@@ -1,7 +1,9 @@
 #pragma once
 #include "Scene.h"
 #include "Button.h"
+#include "ButtonScript.h"
 #include "SceneManager.h"
+#include "Borland.h"
 
 class MainScene : Scene
 {
@@ -13,16 +15,20 @@ protected:
 	SceneManager* sceneManager;
 public:
 	MainScene(int scenenumber) : Scene(scenenumber){
-		startBtn = new GameObject("StartBtn", "button", nullptr, { 10,3 }, { 35,25 }, Position::zeros, nullptr);
+		startBtn = new GameObject("Start", "button", nullptr, { 10,3 }, { 35,25 }, Position::zeros, nullptr);
 		rootChildren.push_back(startBtn);
 		auto button = startBtn->getOrAddComponent<Button>();
 		button->setText("Start");
+		button->onClick = []() {/*sceneManager->enableSceneinIndex(2);*/ 
+			Borland::gotoxy(10, 40); printf("buttonClcikc\n");
+		};
+		startBtn->getOrAddComponent<ButtonScript>();
 
-
-		editBtn = new GameObject("EditBtn", "button", nullptr, { 10,3 }, { 35,30 }, Position::zeros, nullptr);
+		editBtn = new GameObject("Edit", "button", nullptr, { 10,3 }, { 35,30 }, Position::zeros, nullptr);
 		rootChildren.push_back(editBtn);
 		button = editBtn->getOrAddComponent<Button>();
 		button->setText("Edit");
+		editBtn->getOrAddComponent<ButtonScript>();
 	}
 
 	void update() override {

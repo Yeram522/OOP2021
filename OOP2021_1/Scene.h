@@ -20,9 +20,9 @@ public:
 		this->buildindex = buildindex;
 	}
 
-	bool isLoaded() { return isload; };
-	void setLoad(bool trigger) { isload = trigger; }
-
+	bool isLoaded() { return this->isload; };
+	void setLoad(bool trigger) { this->isload = trigger; }
+	int getIndex() { return this->buildindex; }
 	virtual void update()
 	{}
 };

@@ -118,6 +118,8 @@ public:
 	const string& getName() const { return name;  }
 	void setName(const string& name) { this->name = name; }
 	
+	const string& getTag() const { return tag; }
+
 	void update() {}
 
 	void setFreeze(bool paused = true) {
