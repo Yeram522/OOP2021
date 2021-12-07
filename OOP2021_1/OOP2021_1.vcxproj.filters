@@ -13,6 +13,24 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="헤더 파일\Component">
+      <UniqueIdentifier>{8e27ea7a-a8b7-4ef9-b4e0-645d423306cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Script">
+      <UniqueIdentifier>{ef9941b8-1aad-4222-a5b6-22ef549412d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Engine">
+      <UniqueIdentifier>{5a48fdb5-7d1d-4f50-aec9-07b592c213d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Scene">
+      <UniqueIdentifier>{02e901c1-d8ad-4661-be2e-4bf76e41fd52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Script\TetrisGame">
+      <UniqueIdentifier>{20412c37-d427-4b9b-a66d-8206eb8b53df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Script\Main">
+      <UniqueIdentifier>{71942991-4f39-415e-9d4a-448456b0d421}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -66,54 +84,84 @@
     <ClCompile Include="ScoreScript.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="MainScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ButtonScript.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Screen.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Input.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Position.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Borland.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="TetrisGame.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Transform.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Behaviour.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Component</Filter>
     </ClInclude>
     <ClInclude Include="Component.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Component</Filter>
     </ClInclude>
-    <ClInclude Include="MoveScript.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="Renderer.h">
+      <Filter>헤더 파일\Component</Filter>
     </ClInclude>
     <ClInclude Include="RendererEnabler.h">
+      <Filter>헤더 파일\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Behaviour.h">
+      <Filter>헤더 파일\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Position.h">
+      <Filter>헤더 파일\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>헤더 파일\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>헤더 파일\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>헤더 파일\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Borland.h">
+      <Filter>헤더 파일\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Screen.h">
+      <Filter>헤더 파일\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>헤더 파일\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="TetrisGame.h">
+      <Filter>헤더 파일\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MainScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="BlockScript.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="PanelScript.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Script\TetrisGame</Filter>
     </ClInclude>
     <ClInclude Include="MapScript.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Script\TetrisGame</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveScript.h">
+      <Filter>헤더 파일\Script\TetrisGame</Filter>
+    </ClInclude>
+    <ClInclude Include="PanelScript.h">
+      <Filter>헤더 파일\Script\TetrisGame</Filter>
     </ClInclude>
     <ClInclude Include="ScoreScript.h">
+      <Filter>헤더 파일\Script\TetrisGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonScript.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

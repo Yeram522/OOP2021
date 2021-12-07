@@ -1,13 +1,11 @@
 #pragma once
-
-#include "Position.h"
-#include "GameObject.h"
-#include "MoveScript.h"
-#include "RendererEnabler.h"
+#include "Scene.h"
 #include "BlockScript.h"
 #include "PanelScript.h"
 #include "ScoreScript.h"
 #include "MapScript.h"
+#include "MoveScript.h"
+
 #if 0
 #include "Block.h"
 #include "Score.h"
@@ -20,7 +18,7 @@ struct BlockShape {
     Dimension	dim;
 };
 
-class TetrisGame
+class TetrisGame:Scene
 {
     bool                isCompleted;
     GameObject*         banner;
@@ -58,8 +56,9 @@ class TetrisGame
 
 public:
 
-    TetrisGame() : isCompleted(false), currentBlock(nullptr), mapScript(nullptr), 
-        map(nullptr), next(nullptr) {
+    TetrisGame(int scenenumber) : isCompleted(false), currentBlock(nullptr), mapScript(nullptr), 
+        map(nullptr), next(nullptr), Scene(scenenumber) {
+        
         map = new GameObject("map", "panel", nullptr, { 10, 20 }, { 5,5 }, Position::zeros, nullptr);
         rootChildren.push_back(map);
         auto panelScript = map->getOrAddComponent<PanelScript>();
@@ -92,7 +91,7 @@ public:
 
     bool isGameOver() const { return isCompleted; }
 
-    void update() {
+    void update() override {
         if (currentBlock->isActive() == false) {
             map->remove(currentBlock);
             delete currentBlock;
