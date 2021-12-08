@@ -4,6 +4,7 @@
 #include "Behaviour.h"
 #include "Position.h"
 #include "Renderer.h"
+
 typedef int strong;
 
 struct BlockShapes {
@@ -14,15 +15,18 @@ struct BlockShapes {
 class MapEditScript :
     public Behaviour
 {
-	const vector<BlockShapes> candidates{
-			{ '\xDB',3},
-			{ '\xB2',2 },		
-			{ '\xB1',1 }
+	vector<BlockShapes> candidates{
+		{ '\xDB',3},
+		{ '\xB2',2 },
+		{ '\xB0',1 }
 	};
 
+	BlockShapes currentBlockShape;
+	int indexNum;
 	vector<BlockShapes*> mapdesign;
+
 public:
-    MapEditScript(GameObject* gameObject) : Behaviour(gameObject)
+    MapEditScript(GameObject* gameObject) : Behaviour(gameObject),indexNum(0), currentBlockShape(candidates[0])
     {
 
     }
@@ -34,10 +38,28 @@ public:
 		if(transform->getPosition().x<pos.x && pos.x<transform->getPosition().x+renderer->getDimension().x
 			&& transform->getPosition().y < pos.y && pos.y < transform->getPosition().y + renderer->getDimension().y)
 		{
-			const char shape = candidates[0].shape;
+			const char shape = currentBlockShape.shape;
 			renderer->setShape(shape, transform->world2Local(pos));
 			Borland::gotoxy(10, 40); printf("buttonClcikc:%d\n"); cout << pos;
 		}
 	}
+
+	void prevCategoryList()
+	{
+		indexNum--;
+		if (indexNum == -1 ? true : false) indexNum = 2;
+		currentBlockShape.shape = candidates[indexNum].shape;
+		Borland::gotoxy(1, 40); printf("index:%d\n", indexNum);
+
+	}
+	void nextCategoryList()
+	{
+		indexNum++;
+		if (indexNum == 3 ? true : false) indexNum = 0;
+		currentBlockShape.shape = candidates[indexNum].shape;
+		Borland::gotoxy(1, 40); printf("index:%d\n", indexNum);
+	}
+
+	BlockShapes getCurrentBlock() { return currentBlockShape; }
 };
 
