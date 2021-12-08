@@ -19,10 +19,11 @@ public:
 		rootChildren.push_back(startBtn);
 		auto button = startBtn->getOrAddComponent<Button>();
 		button->setText("Start");
-		button->onClick = []() {/*sceneManager->enableSceneinIndex(2);*/ 
+		auto script = startBtn->getOrAddComponent<ButtonScript>();
+		script->onClick = []() {/*sceneManager->enableSceneinIndex(2);*/
 			Borland::gotoxy(10, 40); printf("buttonClcikc\n");
 		};
-		startBtn->getOrAddComponent<ButtonScript>();
+		
 
 		editBtn = new GameObject("Edit", "button", nullptr, { 10,3 }, { 35,30 }, Position::zeros, nullptr);
 		rootChildren.push_back(editBtn);

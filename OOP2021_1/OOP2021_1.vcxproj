@@ -161,6 +161,8 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainScene.cpp" />
+    <ClCompile Include="MapEditor.cpp" />
+    <ClCompile Include="MapEditScript.cpp" />
     <ClCompile Include="MapScript.cpp" />
     <ClCompile Include="MoveScript.cpp" />
     <ClCompile Include="PanelScript.cpp" />
@@ -184,6 +186,8 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="MainScene.h" />
+    <ClInclude Include="MapEditor.h" />
+    <ClInclude Include="MapEditScript.h" />
     <ClInclude Include="MapScript.h" />
     <ClInclude Include="MoveScript.h" />
     <ClInclude Include="PanelScript.h" />

@@ -12,11 +12,7 @@ using namespace std;
 class Button : public Renderer
 {
 	string text;
-protected:
-	Input* input;
 public:
-	function<void(void)> onClick;
-
 	Button(GameObject* gameObject)
 		:Renderer(gameObject, nullptr, gameObject->getRenderer()->getDimension() + Position::ones) {}
 	
@@ -32,11 +28,8 @@ public:
 
 	bool isInside(const Position& pos)
 	{
-		/*return gameObject->getTransform()->getPosition().x < pos.x
-			&& pos.x < Renderer::getTransform()->getPosition().x + Renderer::getWidth() &&
-			gameObject->getTransform()->getPosition().y < pos.y
-			&& pos.x < Renderer::getTransform()->getPosition().y + Renderer::getHeight();*/
-		return true;
+		return transform->getPosition().x < pos.x&& pos.x < transform->getPosition().x + getDimension().x
+			&& transform->getPosition().y < pos.y&& pos.y < transform->getPosition().y + getDimension().y;
 	}
 
 	

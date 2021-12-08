@@ -18,6 +18,7 @@ struct BlockShape {
     Dimension	dim;
 };
 
+
 class TetrisGame:Scene
 {
     bool                isCompleted;
@@ -25,7 +26,7 @@ class TetrisGame:Scene
 
     static BlockShape chooseShape() {
         static vector<BlockShape> candidates{
-            { "\xDB\xDB \xDB \xDB", {2, 3}	},
+            { "\xB0\xB0 \xB0 \xB0", {2, 3}	},
             { "\xDB\xDB\xDB\xDB",	{2, 2}	},
             { "\xDB\xDB\xDB\xDB",	{4, 1}	},
             { "\xDB\xDB\xDB \xDB ", {2, 3}	},

@@ -8,6 +8,7 @@ class ButtonScript : public Behaviour
 protected:
 	Button* button;
 public:
+	function<void(void)> onClick;
 	ButtonScript(GameObject* obj) : Behaviour(obj){
 		button = obj->getComponent<Button>();
 	
@@ -16,7 +17,7 @@ public:
 	void update() override {
 		if (!input->getMouseButtonDown(0)) return;
 		auto pos = input->getMousePosition();
-		if (button->isInside(pos)) button->onClick();
+		if (button->isInside(pos)) { onClick();}
 	}
 
 

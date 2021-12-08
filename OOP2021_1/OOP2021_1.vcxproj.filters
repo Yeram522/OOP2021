@@ -31,6 +31,9 @@
     <Filter Include="헤더 파일\Script\Main">
       <UniqueIdentifier>{71942991-4f39-415e-9d4a-448456b0d421}</UniqueIdentifier>
     </Filter>
+    <Filter Include="헤더 파일\Script\MapEditor">
+      <UniqueIdentifier>{e0ea6143-9409-4283-b153-cb278476df7d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -99,6 +102,12 @@
     <ClCompile Include="ButtonScript.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="MapEditor.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="MapEditScript.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Transform.h">
@@ -140,9 +149,6 @@
     <ClInclude Include="TetrisGame.h">
       <Filter>헤더 파일\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="MainScene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="BlockScript.h">
       <Filter>헤더 파일\Script\TetrisGame</Filter>
     </ClInclude>
@@ -158,10 +164,19 @@
     <ClInclude Include="ScoreScript.h">
       <Filter>헤더 파일\Script\TetrisGame</Filter>
     </ClInclude>
-    <ClInclude Include="Button.h">
+    <ClInclude Include="ButtonScript.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="ButtonScript.h">
+    <ClInclude Include="MainScene.h">
+      <Filter>헤더 파일\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MapEditor.h">
+      <Filter>헤더 파일\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>헤더 파일\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="MapEditScript.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

@@ -9,9 +9,9 @@
 #include "Block.h"
 #include "Panel.h"
 #endif
-#include "TetrisGame.h"
 #include "SceneManager.h"
 #include "MainScene.h"
+#include "MapEditor.h"
 
 using namespace std;
 
@@ -23,13 +23,13 @@ int main()
 	auto input = Input::GetInstance();
 	auto sceneManager = SceneManager::GetInstance();
 	auto main = new MainScene(sceneManager->getSceneCount());
-	auto tetris = new TetrisGame(sceneManager->getSceneCount());
+	auto editor = new MapEditor(sceneManager->getSceneCount());
 	
 	sceneManager->createScene(main);
-	sceneManager->createScene(tetris);
+	sceneManager->createScene(editor);
 
-	sceneManager->enableScene((Scene*)main);
-	while (tetris->isGameOver() == false) 
+	sceneManager->enableScene((Scene*)main);//실행할 씬
+	while (true) 
 	{
 		screen->clear();
 
@@ -42,7 +42,6 @@ int main()
 		Sleep(100);
 	}
 
-	delete tetris;
 
 	return 0;
 }
