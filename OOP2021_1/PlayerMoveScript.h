@@ -4,22 +4,18 @@
 #include "Transform.h"
 #include "MoveMapScript.h"
 #include <vector>
-struct AnimationClip {
-	string		shape;
-	Dimension	dim;
-};
+
 
 class PlayerMoveScript: public Behaviour
 {
+	GameObject* map;
+	MoveMapScript* mapscript;
+	int currnetAnimationClip;
+
 	float currentX;
 	float currentY;
 	float speed;
-	GameObject* map;
-	MoveMapScript* mapscript;
-
-
-	int currnetAnimationClip;
-
+	
 public:
 	PlayerMoveScript(GameObject* gameObject) : Behaviour(gameObject), map(gameObject->getParent()), currentX(0.0f),currentY(10.0f)
 	{
@@ -30,17 +26,6 @@ public:
 		mapscript = map->getComponent<MoveMapScript>();
 	}
 
-	AnimationClip Animator()
-	{
-		vector<AnimationClip> clips{
-			{ "\xCD\xCD\xCB\xCD\xCD\xF0\xF0\xF0  \xF0\xF0\xF0\xF0  \xF0\xF0", {5,4}	},
-			{ "  \xCB  \xF0\xF0\xF0  \xF0\xF0\xF0\xF0  \xF0\xF0", {5,4}  }
-		};
-		if (currnetAnimationClip == clips.capacity()-1) currnetAnimationClip = 0;//마지막 클립이면 처음클립으로 돌아간다.
-		else currnetAnimationClip++;
-
-		return clips[currnetAnimationClip];
-	}
 
 	void update() override
 	{
@@ -50,7 +35,7 @@ public:
 		auto width = dim.x;
 		auto height = dim.y;
 
-		renderer->setShape(Animator().shape.c_str());
+		//renderer->setShape(Animator().shape.c_str());
 
 		if (input->getKey(VK_RIGHT)) {
 			float nextX = currentX + 1.0f;

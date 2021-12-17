@@ -8,6 +8,7 @@
 #include "MapEditor.h"
 #include "MoveMapScript.h"
 #include "PlayerMoveScript.h"
+#include "Animator.h"
 
 using namespace std;
 
@@ -22,6 +23,7 @@ class HelicopterGame: public Scene
 	
 	string sprite = "  \xCB  \xF0\xF0\xF0  \xF0\xF0\xF0\xF0  \xF0\xF0";
 	MoveMapScript* mapScript;
+	Animator* animator;
 
 	Renderer* mapRender;
 
@@ -46,7 +48,9 @@ public:
 		player = new GameObject{ "helicopter", "player", sprite.c_str(),
 			{5,4}, {0,10},  Position::zeros, map };
 		player->addComponent<PlayerMoveScript>();
-
+		animator = player->getOrAddComponent<Animator>();//애니메이터 추가 및 가져오기
+		animator->addClip({ "\xCD\xCD\xCB\xCD\xCD\xF0\xF0\xF0  \xF0\xF0\xF0\xF0  \xF0\xF0", {5,4} });
+		animator->addClip({ "  \xCB  \xF0\xF0\xF0  \xF0\xF0\xF0\xF0  \xF0\xF0", {5,4} });//클립추가.
 	};
 
 	char* loadData(int mapsize)
@@ -100,7 +104,7 @@ public:
 
 
 	void update() override {
-		
+		animator->Play();
 		for (auto child : rootChildren) child->internalUpdate();
 		rootChildren.erase(
 			std::remove_if(rootChildren.begin(), rootChildren.end(),
