@@ -1,23 +1,31 @@
 #pragma once
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <fstream>
+#include <string>
 #include "Scene.h"
 #include "Button.h"
 #include "ButtonScript.h"
 #include "SceneManager.h"
 #include "MapEditScript.h"
 #include "Borland.h"
+#include "Renderer.h"
+
+using namespace std;
 
 class MapEditor:public Scene
 {
-
-
 	GameObject* map;
 	GameObject* blockCategory;
 	GameObject* categPrev;//btn
 	GameObject* categNext;//btn
+	GameObject* loadMap;//btn
+	GameObject* saveMap;//btn
+	GameObject* prevPage;//btn
+	GameObject* nextPage;//btn
 	GameObject* currentBlock;
 
 	MapEditScript* editorScript;
-
 
 
 	vector<GameObject*> rootChildren;
@@ -60,6 +68,77 @@ public:
 			editorScript->nextCategoryList();
 			Borland::gotoxy(10, 40); printf("categNext button\n");
 		};
+
+		loadMap = new GameObject("loadBtn", "button", nullptr, { 6,2 }, { 64,20}, Position::zeros, nullptr);
+		rootChildren.push_back(loadMap);
+		button = loadMap->getOrAddComponent<Button>();
+		button->setText("Load");
+		script = loadMap->getOrAddComponent<ButtonScript>();
+		script->onClick = [&]() {
+			Renderer* mapRender = map->getComponent<Renderer>();
+			int size = mapRender->getDimension().x * mapRender->getDimension().y;
+			char* result = new char[size];
+
+			ifstream fin("mapdata.txt");//입력스트림을 관리하기 위한 객체를 선언 및 파일 열기
+
+			if (fin.fail()) {
+				Borland::gotoxy(10, 40);
+				cout << "파일 오픈에 실패했습니다." << endl;
+				return nullptr;
+			}
+
+			fin >> result;
+
+
+			for (int i = 0; i < size; i++)
+			{
+				if (result[i] == '0') result[i] = ' ';
+				else if (result[i] == '1') result[i] = '\xB0';
+				else if (result[i] == '2') result[i] = '\xB2';
+				else if (result[i] == '3') result[i] = '\xDB';
+			}
+
+			mapRender->setShape(result);
+			Borland::gotoxy(10, 40); printf("loadBtn button %d\n");
+		};
+
+		saveMap = new GameObject("saveBtn", "button", nullptr, { 6,2 }, { 64,24 }, Position::zeros, nullptr);
+		rootChildren.push_back(saveMap);
+		button = saveMap->getOrAddComponent<Button>();
+		button->setText("Save");
+		script = saveMap->getOrAddComponent<ButtonScript>();
+		script->onClick = [&]() {
+			Renderer* mapRender = map->getComponent<Renderer>();
+			string dt = "";
+			dt.append(mapRender->getShape());
+			char from = '\xB0';
+			char to = '1';
+			replace(dt.begin(), dt.end(), from, to);
+			from = '\xB2';
+			to = '2';
+			replace(dt.begin(), dt.end(), from, to);
+			from = '\xDB';
+			to = '3';
+			replace(dt.begin(), dt.end(), from, to);
+			from = ' ';
+			to = '0';
+			replace(dt.begin(), dt.end(), from, to);
+
+			dt.resize(mapRender->getDimension().x * mapRender->getDimension().y);
+
+			const char* result = dt.c_str();
+
+			ofstream fout;
+
+			fout.open("mapdata.txt");
+
+			fout << result << endl;
+
+			fout.close();
+
+			Borland::gotoxy(10, 40); printf("saveBtn button:\n");
+		};
+
 	}
 
 	void update() override {
