@@ -47,6 +47,7 @@ public:
     virtual void draw();
 
 	const char* getShape() const { return shape; }
+	const char getShape(const Position& pos) const { return shape[pos2Offset(pos)]; }
 	void setShape(const char* face) {
 		memset(shape, ' ', capacity);
 		if (face == nullptr || face[0] == '\0') return;

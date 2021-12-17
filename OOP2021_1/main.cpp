@@ -12,6 +12,7 @@
 #include "SceneManager.h"
 #include "MainScene.h"
 #include "MapEditor.h"
+#include "HelicopterGame.h"
 
 using namespace std;
 
@@ -24,11 +25,13 @@ int main()
 	auto sceneManager = SceneManager::GetInstance();
 	auto main = new MainScene(sceneManager->getSceneCount());
 	auto editor = new MapEditor(sceneManager->getSceneCount());
+	auto game = new HelicopterGame(sceneManager->getSceneCount());
 	
 	sceneManager->createScene(main);
 	sceneManager->createScene(editor);
+	sceneManager->createScene(game);
 
-	sceneManager->enableScene((Scene*)editor);//실행할 씬
+	sceneManager->enableScene((Scene*)game);//실행할 씬
 	while (true) 
 	{
 		screen->clear();

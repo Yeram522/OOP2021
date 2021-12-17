@@ -27,7 +27,6 @@ class MapEditor:public Scene
 
 	MapEditScript* editorScript;
 
-
 	vector<GameObject*> rootChildren;
 public:
 	MapEditor(int scenenumber) : Scene(scenenumber) 
@@ -76,7 +75,8 @@ public:
 		script = loadMap->getOrAddComponent<ButtonScript>();
 		script->onClick = [&]() {
 			Renderer* mapRender = map->getComponent<Renderer>();
-			mapRender->setShape(loadData());
+			int size = mapRender->getDimension().x * mapRender->getDimension().y;
+			mapRender->setShape(loadData(size));
 		};
 
 		saveMap = new GameObject("saveBtn", "button", nullptr, { 6,2 }, { 64,24 }, Position::zeros, nullptr);
@@ -123,11 +123,9 @@ public:
 		Borland::gotoxy(10, 40); printf("saveBtn button:\n");
 	}
 
-	char* loadData()
+    char* loadData(int mapsize)
 	{
-		Renderer* mapRender = map->getComponent<Renderer>();
-		int size = mapRender->getDimension().x * mapRender->getDimension().y;
-		char* result = new char[size];
+		char* result = new char[mapsize];
 
 		ifstream fin("mapdata.txt");//입력스트림을 관리하기 위한 객체를 선언 및 파일 열기
 
@@ -140,7 +138,7 @@ public:
 		fin >> result;
 
 
-		for (int i = 0; i < size; i++)
+		for (int i = 0; i < mapsize; i++)
 		{
 			if (result[i] == '0') result[i] = ' ';
 			else if (result[i] == '1') result[i] = '\xB0';
@@ -152,7 +150,6 @@ public:
 		return result;
 		
 	}
-
 
 	void update() override {
 

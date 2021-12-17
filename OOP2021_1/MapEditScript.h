@@ -8,8 +8,8 @@
 typedef int strong;
 
 struct BlockShapes {
-	char		shape;
-	strong        strong;
+	char	shape;
+	strong  strong;
 };
 
 class MapEditScript :
@@ -38,6 +38,12 @@ public:
 		if(transform->getPosition().x<pos.x && pos.x<transform->getPosition().x+renderer->getDimension().x
 			&& transform->getPosition().y < pos.y && pos.y < transform->getPosition().y + renderer->getDimension().y)
 		{
+			
+			if (renderer->getShape(transform->world2Local(pos)) != ' ')//비어있는칸이 아니면
+			{
+				renderer->setShape(' ', transform->world2Local(pos));
+				return;
+			}
 			const char shape = currentBlockShape.shape;
 			renderer->setShape(shape, transform->world2Local(pos));
 			Borland::gotoxy(10, 40); printf("buttonClcikc:%d\n"); cout << pos;

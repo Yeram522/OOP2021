@@ -108,6 +108,15 @@
     <ClCompile Include="MapEditScript.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="HelicopterGame.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveMapScript.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerMoveScript.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Transform.h">
@@ -158,14 +167,8 @@
     <ClInclude Include="MoveScript.h">
       <Filter>헤더 파일\Script\TetrisGame</Filter>
     </ClInclude>
-    <ClInclude Include="PanelScript.h">
-      <Filter>헤더 파일\Script\TetrisGame</Filter>
-    </ClInclude>
     <ClInclude Include="ScoreScript.h">
       <Filter>헤더 파일\Script\TetrisGame</Filter>
-    </ClInclude>
-    <ClInclude Include="ButtonScript.h">
-      <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="MainScene.h">
       <Filter>헤더 파일\Scene</Filter>
@@ -177,6 +180,21 @@
       <Filter>헤더 파일\Component</Filter>
     </ClInclude>
     <ClInclude Include="MapEditScript.h">
+      <Filter>헤더 파일\Script\MapEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="ButtonScript.h">
+      <Filter>헤더 파일\Script\MapEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="HelicopterGame.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="PanelScript.h">
+      <Filter>헤더 파일\Script\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveMapScript.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerMoveScript.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
