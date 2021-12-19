@@ -83,10 +83,10 @@ public:
 
     void moveMap()//좌측으로 맵을 이동한다.
 	{
-		Borland::gotoxy(10, 41); printf("move Map!!%d\n", mapRender->getDimension().y);
+		//Borland::gotoxy(10, 41); printf("move Map!!%d\n", mapRender->getDimension().y);
 		string mapdata = "";//현재 맵의 이미지 가져오기.
 		mapdata.append(mapRender->getShape());
-
+		Borland::gotoxy(10, 42); printf("player Position!!%d, %d\n", player->getTransform()->getPos().x, player->getTransform()->getPos().y);
 		
 		for (int i = 0; i < mapRender->getDimension().y; i++)
 		{

@@ -157,6 +157,7 @@
     <ClCompile Include="Borland.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ButtonScript.cpp" />
+    <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="HelicopterGame.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="Borland.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="ButtonScript.h" />
+    <ClInclude Include="Collider.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="HelicopterGame.h" />

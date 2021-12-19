@@ -146,7 +146,7 @@ public:
 			else if (result[i] == '3') result[i] = '\xDB';
 		}
 
-		Borland::gotoxy(10, 40); printf("loadBtn button %d\n");
+		//Borland::gotoxy(10, 40); printf("loadBtn button %d\n");
 		return result;
 		
 	}

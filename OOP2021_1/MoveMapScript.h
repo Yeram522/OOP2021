@@ -3,6 +3,7 @@
 #include "Behaviour.h"
 #include <functional>
 
+//이동하는맵의 스크립트
 class MoveMapScript :
     public Behaviour
 {
@@ -20,7 +21,7 @@ public:
 	{
 		if (speedFlag - (int)speedFlag == 0)
 		{
-			movemapLeft();
+			//movemapLeft();
 		}
 		
 		speedFlag += speed;
