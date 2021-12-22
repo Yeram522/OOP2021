@@ -9,6 +9,7 @@
 #include "MoveMapScript.h"
 #include "PlayerMoveScript.h"
 #include "Animator.h"
+#include "RigidBody.h"
 
 using namespace std;
 
@@ -18,10 +19,7 @@ class HelicopterGame: public Scene
 {
 	GameObject* map;
 	GameObject* player;//헬리콥터
-
-	
-	
-	string sprite = "  \xCB  \xF0\xF0\xF0  \xF0\xF0\xF0\xF0  \xF0\xF0";
+	string sprite = "\xCD\xCD\xCB\xCD\xCD\xF0\xF0\xF0  \xF0\xF0\xF0\xF0  \xF0\xF0";
 	MoveMapScript* mapScript;
 	Animator* animator;
 
@@ -34,9 +32,11 @@ public:
 		
 		map = new GameObject("map", "panel", nullptr, { 50,20 }, { 5,5 }, Position::zeros, nullptr);
 		rootChildren.push_back(map);
+
 		//판낼 이용시 바운더리 밀림 현상 때문에 일단은 주석처리함.
 		//auto panelScript = map->getOrAddComponent<PanelScript>();
 		//panelScript->setTitle(" screen");
+
 		mapScript = map->getOrAddComponent<MoveMapScript>();
 
 		mapRender = map->getComponent<Renderer>();
@@ -48,9 +48,11 @@ public:
 		player = new GameObject{ "helicopter", "player", sprite.c_str(),
 			{5,4}, {0,10},  Position::zeros, map };
 		player->addComponent<PlayerMoveScript>();
+		player->addComponent<RigidBody>();
 		animator = player->getOrAddComponent<Animator>();//애니메이터 추가 및 가져오기
 		animator->addClip({ "\xCD\xCD\xCB\xCD\xCD\xF0\xF0\xF0  \xF0\xF0\xF0\xF0  \xF0\xF0", {5,4} });
 		animator->addClip({ "  \xCB  \xF0\xF0\xF0  \xF0\xF0\xF0\xF0  \xF0\xF0", {5,4} });//클립추가.
+
 	};
 
 	char* loadData(int mapsize)

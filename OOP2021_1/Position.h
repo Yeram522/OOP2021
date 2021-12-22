@@ -29,6 +29,11 @@ struct Position
 		return *this;
 	}
 
+	bool operator==(const Position& other) {
+		if (this->x == other.x && this->y == other.y) return true;
+		return false;
+	}
+
 	friend ostream& operator<<(ostream& o, const Position& pos);
 	friend Position operator*(int x, Position pos);
 	friend Position operator*(int x, const Position& pos);
@@ -43,4 +48,5 @@ struct Position
 };
 
 typedef Position Dimension;
+typedef Position Direction;
 
