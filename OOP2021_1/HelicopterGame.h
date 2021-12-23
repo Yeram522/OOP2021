@@ -11,6 +11,9 @@
 #include "Animator.h"
 #include "RigidBody.h"
 #include "Collider.h"
+#include "Button.h"
+#include "boardScript.h"
+
 
 using namespace std;
 
@@ -20,23 +23,25 @@ class HelicopterGame: public Scene
 {
 	GameObject* map;
 	GameObject* player;//헬리콥터
+	GameObject* board; //Game State UI
+
 	string sprite = "\xCD\xCD\xCB\xCD\xCD\xF0\xF0\xF0  \xF0\xF0\xF0\xF0  \xF0\xF0";
 	MoveMapScript* mapScript;
 	Animator* animator;
 
 	Renderer* mapRender;
-
-	vector<GameObject*> rootChildren;
+	
 public:
 	HelicopterGame(int scenenumber):Scene(scenenumber), player(nullptr)
 	{
+		//판낼 이용시 바운더리 밀림 현상 때문에 일단은 주석처리함.
+		/*GameObject* screenUI = new GameObject("mapframe", "ui", nullptr, { 50,20 }, { 5,5 }, Position::zeros, nullptr);
+		auto panelScript = screenUI->getOrAddComponent<PanelScript>();
+		panelScript->setTitle(" screen");
+		rootChildren.push_back(screenUI);*/
 		
 		map = new GameObject("map", "panel", nullptr, { 50,20 }, { 5,5 }, Position::zeros, nullptr);
 		rootChildren.push_back(map);
-
-		//판낼 이용시 바운더리 밀림 현상 때문에 일단은 주석처리함.
-		//auto panelScript = map->getOrAddComponent<PanelScript>();
-		//panelScript->setTitle(" screen");
 
 		mapScript = map->getOrAddComponent<MoveMapScript>();
 
@@ -54,6 +59,13 @@ public:
 		animator->addClip({ "\xCD\xCD\xCB\xCD\xCD\xF0\xF0\xF0  \xF0\xF0\xF0\xF0  \xF0\xF0", {5,4} });
 		animator->addClip({ "  \xCB  \xF0\xF0\xF0  \xF0\xF0\xF0\xF0  \xF0\xF0", {5,4} });//클립추가.
 		player->addComponent<PlayerMoveScript>();
+
+		board = new GameObject("board", "ui", nullptr, { 10,3 }, { 25,27}, Position::zeros, nullptr);
+		auto button = board->getOrAddComponent<Button>();
+		button->setText("Time: 0s");
+		board->addComponent<boardScript>();
+		rootChildren.push_back(board);
+		
 
 	};
 
@@ -80,18 +92,17 @@ public:
 			else if (result[i] == '3') result[i] = '\xDB';
 		}
 
-		Borland::gotoxy(10, 40); printf("loadBtn button %d\n");
+		
 		return result;
 
 	}
 
     void moveMap()//좌측으로 맵을 이동한다.
 	{
-		//Borland::gotoxy(10, 41); printf("move Map!!%d\n", mapRender->getDimension().y);
+
 		string mapdata = "";//현재 맵의 이미지 가져오기.
 		mapdata.append(mapRender->getShape());
-		Borland::gotoxy(10, 42); printf("player Position!!%d, %d\n", player->getTransform()->getPos().x, player->getTransform()->getPos().y);
-		
+
 		for (int i = 0; i < mapRender->getDimension().y; i++)
 		{
 			int index = i * mapRender->getDimension().x;
@@ -105,17 +116,31 @@ public:
 		mapRender->setShape(result);
 	}
 
+	bool isGameOver()
+	{
+		if (player->getComponent<PlayerMoveScript>()->getIsCrushed())
+		{
+			board->getComponent<boardScript>()->stopTimer();
+			board->getComponent<Button>()->setText("GameOver");		
+			return true;
+		}
+		return false;
+	}
 
+	void start() override
+	{
+		board->getComponent<boardScript>()->startTimer();
+	}
 
 	void update() override {
+		if (isGameOver())
+		{
+			map->setFreeze();
+			player->setFreeze();
+		}
 		animator->Play();
-		for (auto child : rootChildren) child->internalUpdate();
-		rootChildren.erase(
-			std::remove_if(rootChildren.begin(), rootChildren.end(),
-				[](auto child) { return child->isActive() == false; }),
-			rootChildren.end());
-		for (auto child : rootChildren) child->internalRemove();
-		for (auto child : rootChildren) child->internalRender();
+		
+		Scene::update();
 	}
 };
 

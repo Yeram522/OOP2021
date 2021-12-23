@@ -126,6 +126,9 @@
     <ClCompile Include="RigidBody.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="boardScript.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Transform.h">
@@ -214,6 +217,9 @@
     </ClInclude>
     <ClInclude Include="RigidBody.h">
       <Filter>헤더 파일\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="boardScript.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

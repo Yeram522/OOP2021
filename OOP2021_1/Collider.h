@@ -27,7 +27,7 @@ public:
 		for (int i = 0; i < edges.size(); i++)
 		{
 			int offset = renderer->pos2Offset(nextPos + edges[i].pos);
-			Borland::gotoxy(10, 39); printf("Collide!! : %c\n", renderer->getShape()[offset]);
+			Borland::gotoxy(10, 40); printf("Collide!! : %c\n", renderer->getShape()[offset]);
 			if (renderer->getShape()[offset] != ' ') return true;
 		}
 

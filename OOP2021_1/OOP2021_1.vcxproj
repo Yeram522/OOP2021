@@ -154,6 +154,7 @@
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="Behaviour.cpp" />
     <ClCompile Include="BlockScript.cpp" />
+    <ClCompile Include="boardScript.cpp" />
     <ClCompile Include="Borland.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="ButtonScript.cpp" />
@@ -186,6 +187,7 @@
     <ClInclude Include="Animator.h" />
     <ClInclude Include="Behaviour.h" />
     <ClInclude Include="BlockScript.h" />
+    <ClInclude Include="boardScript.h" />
     <ClInclude Include="Borland.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="ButtonScript.h" />

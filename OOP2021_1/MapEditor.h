@@ -27,7 +27,6 @@ class MapEditor:public Scene
 
 	MapEditScript* editorScript;
 
-	vector<GameObject*> rootChildren;
 public:
 	MapEditor(int scenenumber) : Scene(scenenumber) 
 	{
@@ -156,13 +155,7 @@ public:
 		auto blockShape = editorScript->getCurrentBlock();
 		currentBlock->getComponent<Renderer>()->setShape(&blockShape.shape);
 
-		for (auto child : rootChildren) child->internalUpdate();
-		rootChildren.erase(
-			std::remove_if(rootChildren.begin(), rootChildren.end(),
-				[](auto child) { return child->isActive() == false; }),
-			rootChildren.end());
-		for (auto child : rootChildren) child->internalRemove();
-		for (auto child : rootChildren) child->internalRender();
+		Scene::update();
 	}
 };
 

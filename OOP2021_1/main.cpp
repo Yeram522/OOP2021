@@ -31,7 +31,7 @@ int main()
 	sceneManager->createScene(editor);
 	sceneManager->createScene(game);
 
-	sceneManager->enableScene((Scene*)game);//실행할 씬
+	sceneManager->enableScene((Scene*)main);//실행할 씬
 	while (true) 
 	{
 		screen->clear();

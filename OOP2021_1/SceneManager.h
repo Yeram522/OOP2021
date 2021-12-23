@@ -31,7 +31,6 @@ public:
 		sceneinbuild.push_back((Scene*)newscene);
 	}
 
-	
 
 	int getSceneCount() { return sceneinbuild.size(); };
 
@@ -39,17 +38,19 @@ public:
 	{
 		CurrentScene = scene;
 		CurrentScene->setLoad(true);
+		CurrentScene->start();
 		CurrentScene->update();
 	}
 
 	void enableSceneinIndex(int index)
 	{
 		disableScene(CurrentScene);
-		for (auto scene : sceneinbuild)
-			if (scene->getIndex() == index)
+		for (int i = 0; i < getSceneCount(); i++)
+			if (i == index)
 			{
-				CurrentScene = scene;
+				CurrentScene = sceneinbuild[i];
 				CurrentScene->setLoad(true);
+				CurrentScene->start();
 				CurrentScene->update();
 				return;
 			}	
@@ -66,6 +67,7 @@ public:
 		for (auto scene : sceneinbuild)
 			if (scene->isLoaded()) scene->update();
 	}
+
 
 
 };

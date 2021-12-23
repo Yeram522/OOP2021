@@ -58,8 +58,6 @@ public:
 			}
 
 		}
-
-		Borland::gotoxy(10, 41); printf("Debug delay\n");
 		
 	}
 

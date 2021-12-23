@@ -21,7 +21,7 @@ public:
 	{
 		if (speedFlag - (int)speedFlag == 0)
 		{
-			//movemapLeft();
+			movemapLeft();
 		}
 		
 		speedFlag += speed;
