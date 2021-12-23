@@ -32,21 +32,31 @@ public:
 
 	void init() //스프라이트 가장자리 리지드바디 라인 생성.
 	{	
-		for (int i = 0; i < sprite.size()-1; i++)
-		{
-			//right edge
-			if((i+1)%dim.x == 0 && sprite[i] != ' ') rightedges.push_back({ Direction::right,renderer->offset2Pos(i) });
-			else if(sprite[i+1]==' ') rightedges.push_back({ Direction::right,renderer->offset2Pos(i + 1) });
 
-			//left edge
-			if ((i+dim.x) % dim.x == 0 && sprite[i] != ' ') leftedges.push_back({ Direction::left,renderer->offset2Pos(i) });
-			else if (sprite[i - 1] == ' ') leftedges.push_back({ Direction::left,renderer->offset2Pos(i - 1) });
+		for (int i = 0; i < dim.y; i++) {
+			int rightcount = 0;//한 행당 왼,오 2개만 push_back해야함.
+			int leftcount = 0;//한 행당 왼,오 2개만 push_back해야함.
+			for (int j = 0; j < dim.x; j++) {
+				if(i == 0 && sprite[j] != ' ')  upedges.push_back({ Direction::up,renderer->offset2Pos(j) });
+				if(i == dim.y - 1 && sprite[i*dim.x+j] != ' ')  downedges.push_back({ Direction::down,renderer->offset2Pos(i * dim.x + j) });
 
-			//up edge
-			if (i%dim.x < dim.x && sprite[i] != ' ') upedges.push_back({ Direction::up,renderer->offset2Pos(i) });
+				if (rightcount ==1 && leftcount ==1) continue;
 
-			//down edge
-			if (i >=dim.x*(dim.y-1) && sprite[i] != ' ') downedges.push_back({ Direction::down,renderer->offset2Pos(i) });
+				//left edge
+				if (sprite[dim.x * i + j] != ' ' && leftcount == 0)
+				{
+					leftedges.push_back({ Direction::left,renderer->offset2Pos(dim.x * i + j) });
+					leftcount++;
+				}
+
+				//right edge
+				if (sprite[dim.x * i + dim.x - j - 1] != ' ' && rightcount == 0)
+				{
+					rightedges.push_back({ Direction::right,renderer->offset2Pos(dim.x * i + dim.x - j - 1) });
+					rightcount++;
+				}
+			}
+
 		}
 
 		Borland::gotoxy(10, 41); printf("Debug delay\n");
