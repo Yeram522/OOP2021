@@ -28,9 +28,7 @@ public:
 		{
 			int offset = renderer->pos2Offset(nextPos + edges[i].pos);
 			Borland::gotoxy(10, 39); printf("Collide!! : %c\n", renderer->getShape()[offset]);
-			if (renderer->getShape()[offset] == '\xDB'
-				|| renderer->getShape()[offset] == '\xB2'
-				|| renderer->getShape()[offset] == '\xB0') return true;
+			if (renderer->getShape()[offset] != ' ') return true;
 		}
 
 		return false;
