@@ -10,6 +10,7 @@
 #include "PlayerMoveScript.h"
 #include "Animator.h"
 #include "RigidBody.h"
+#include "Collider.h"
 
 using namespace std;
 
@@ -47,11 +48,12 @@ public:
 
 		player = new GameObject{ "helicopter", "player", sprite.c_str(),
 			{5,4}, {0,10},  Position::zeros, map };
-		player->addComponent<PlayerMoveScript>();
 		player->addComponent<RigidBody>();
+		player->addComponent<Collider>();
 		animator = player->getOrAddComponent<Animator>();//애니메이터 추가 및 가져오기
 		animator->addClip({ "\xCD\xCD\xCB\xCD\xCD\xF0\xF0\xF0  \xF0\xF0\xF0\xF0  \xF0\xF0", {5,4} });
 		animator->addClip({ "  \xCB  \xF0\xF0\xF0  \xF0\xF0\xF0\xF0  \xF0\xF0", {5,4} });//클립추가.
+		player->addComponent<PlayerMoveScript>();
 
 	};
 

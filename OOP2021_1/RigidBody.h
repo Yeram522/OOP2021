@@ -17,7 +17,7 @@ class RigidBody : public Component
 
 	Dimension dim;//gameObject가 갖고있는 sprite의 dim
 	string sprite; //스프라이트 정보
-protected:
+
 	Renderer* renderer;
 public:
 	RigidBody(GameObject* gameObject) : Component(gameObject)
@@ -35,7 +35,7 @@ public:
 
 		for (int i = 0; i < dim.y; i++) {
 			int rightcount = 0;//한 행당 왼,오 2개만 push_back해야함.
-			int leftcount = 0;//한 행당 왼,오 2개만 push_back해야함.
+			int leftcount = 0;
 			for (int j = 0; j < dim.x; j++) {
 				if(i == 0 && sprite[j] != ' ')  upedges.push_back({ Direction::up,renderer->offset2Pos(j) });
 				if(i == dim.y - 1 && sprite[i*dim.x+j] != ' ')  downedges.push_back({ Direction::down,renderer->offset2Pos(i * dim.x + j) });

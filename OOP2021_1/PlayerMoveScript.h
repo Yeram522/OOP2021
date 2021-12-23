@@ -3,6 +3,7 @@
 #include "Behaviour.h"
 #include "Transform.h"
 #include "MoveMapScript.h"
+#include "Collider.h"
 #include <vector>
 
 
@@ -17,6 +18,8 @@ class PlayerMoveScript: public Behaviour
 	
 	Renderer* renderer;
 	Renderer* mapRenderer;
+
+	Collider* collider;
 public:
 	PlayerMoveScript(GameObject* gameObject) : Behaviour(gameObject), map(gameObject->getParent()), currentX(0.0f),currentY(10.0f)
 	{
@@ -27,6 +30,7 @@ public:
 		currentX = pos.x;
 		currentY = pos.y;
 		mapscript = map->getComponent<MoveMapScript>();
+		collider = gameObject->getComponent<Collider>();
 	}
 
 
@@ -41,32 +45,52 @@ public:
 	
 		if (input->getKey(VK_RIGHT)) {
 			float nextX = currentX + 1.0f;
+			//currentX = nextX;
+			if (collider->OnCollisionEnter(Position::right))
+			{
+				
+				Borland::gotoxy(10, 39); printf("Collide!! : (%f , %f)\n", currentX, currentY);
+				return;
+			}
 			currentX = nextX;
-			/*if (!OnCollisionEnter({ (int)nextX+ dim.x, (int)currentY }, dim.y))
-				currentX = nextX;*/
 			return;
 		}
 		if (input->getKey(VK_LEFT)) {
 			if (currentX <= 0) return;
 			float nextX = currentX - 1.0f;
+			
+			if (collider->OnCollisionEnter(Position::left))
+			{
+
+				Borland::gotoxy(10, 39); printf("Collide!! : (%f , %f)\n", currentX, currentY);
+				return;
+			}
 			currentX = nextX;
-			/*if (!OnCollisionEnter({ (int)nextX , (int)currentY }, dim.y))
-				currentX = nextX;*/
 			return;
 		}
 		if (input->getKey(VK_UP)) {
 			float nextY = currentY - 1.0f;
+			
+			if (collider->OnCollisionEnter(Position::up))
+			{
+
+				Borland::gotoxy(10, 39); printf("Collide!! : (%f , %f)\n", currentX, currentY);
+				return;
+			}
 			currentY = nextY;
-			/*if (!OnCollisionEnter({ (int)currentX, (int)nextY }, dim.x))
-				currentY = nextY;*/
 			return;
 		}
 
 		if (input->getKey(VK_DOWN)) {
 			float nextY = currentY + 1.0f;
+			
+			if (collider->OnCollisionEnter(Position::down))
+			{
+
+				Borland::gotoxy(10, 39); printf("Collide!! : (%f , %f)\n", currentX, currentY);
+				return;
+			}
 			currentY = nextY;
-			/*if (!OnCollisionEnter({ (int)currentX, (int)nextY + dim.y }, dim.x))
-				currentY = nextY;*/
 			return;
 		}
 
