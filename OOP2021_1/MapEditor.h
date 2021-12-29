@@ -10,6 +10,7 @@
 #include "MapEditScript.h"
 #include "Borland.h"
 #include "Renderer.h"
+#include "PanelScript.h"
 
 using namespace std;
 
@@ -67,6 +68,17 @@ public:
 			Borland::gotoxy(10, 40); printf("categNext button\n");
 		};
 
+		loadMap = new GameObject("clearBtn", "button", nullptr, { 6,2 }, { 64,16 }, Position::zeros, nullptr);
+		rootChildren.push_back(loadMap);
+		button = loadMap->getOrAddComponent<Button>();
+		button->setText("Clear");
+		script = loadMap->getOrAddComponent<ButtonScript>();
+		script->onClick = [&]() {
+			Renderer* mapRender = map->getComponent<Renderer>();
+			int size = mapRender->getDimension().x * mapRender->getDimension().y;
+			mapRender->setShape("");
+		};
+
 		loadMap = new GameObject("loadBtn", "button", nullptr, { 6,2 }, { 64,20}, Position::zeros, nullptr);
 		rootChildren.push_back(loadMap);
 		button = loadMap->getOrAddComponent<Button>();
@@ -112,14 +124,22 @@ public:
 		const char* result = dt.c_str();
 
 		ofstream fout;
-
-		fout.open("mapdata.txt");
+		
+		fout.open(checkFileExist("mapdata", 0)+ ".txt");
 
 		fout << result << endl;
 
 		fout.close();
 
 		Borland::gotoxy(10, 40); printf("saveBtn button:\n");
+	}
+
+	string checkFileExist(string filename, int index)
+	{
+		if ((access((filename + ".txt").c_str(), 0) == -1)) return filename;
+		index++;
+		string newfilename = filename + to_string(index);
+		return checkFileExist(newfilename.c_str(), index);
 	}
 
     char* loadData(int mapsize)

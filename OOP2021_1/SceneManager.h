@@ -2,7 +2,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "TetrisGame.h"
 #include "Scene.h"
 using namespace std;
 
@@ -39,7 +38,6 @@ public:
 		CurrentScene = scene;
 		CurrentScene->setLoad(true);
 		CurrentScene->start();
-		CurrentScene->update();
 	}
 
 	void enableSceneinIndex(int index)
@@ -51,7 +49,6 @@ public:
 				CurrentScene = sceneinbuild[i];
 				CurrentScene->setLoad(true);
 				CurrentScene->start();
-				CurrentScene->update();
 				return;
 			}	
 	}

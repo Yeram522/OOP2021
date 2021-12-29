@@ -1,11 +1,11 @@
+#pragma warning(disable: 4996)
 #pragma once
 #include <iostream>
+#include <io.h>
 #include <string>
 #include "Position.h"
 #include "GameObject.h"
 #include "RendererEnabler.h"
-
-
 using namespace std;
 
 
@@ -16,19 +16,14 @@ class Scene
 protected:
 	vector<GameObject*> rootChildren;
 public:
-	Scene(int buildindex): isload(false)
-	{
-		this->buildindex = buildindex;
-	}
-
-	virtual void start()
-	{
-
-	}
+	Scene(int buildindex): isload(false), buildindex(buildindex)
+	{}
 
 	bool isLoaded() { return this->isload; };
 	void setLoad(bool trigger = true) { this->isload = trigger; }
 	int getIndex() { return this->buildindex; }
+
+	virtual void start() {}
 	virtual void update()
 	{
 		for (auto child : rootChildren) child->internalUpdate();

@@ -25,13 +25,10 @@
     <Filter Include="헤더 파일\Scene">
       <UniqueIdentifier>{02e901c1-d8ad-4661-be2e-4bf76e41fd52}</UniqueIdentifier>
     </Filter>
-    <Filter Include="헤더 파일\Script\TetrisGame">
-      <UniqueIdentifier>{20412c37-d427-4b9b-a66d-8206eb8b53df}</UniqueIdentifier>
-    </Filter>
     <Filter Include="헤더 파일\Script\MapEditor">
       <UniqueIdentifier>{e0ea6143-9409-4283-b153-cb278476df7d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="헤더 파일\Script\Client">
+    <Filter Include="헤더 파일\Script\game">
       <UniqueIdentifier>{71942991-4f39-415e-9d4a-448456b0d421}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -54,9 +51,6 @@
     <ClCompile Include="Borland.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="TetrisGame.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Transform.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -69,22 +63,10 @@
     <ClCompile Include="Renderer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="MoveScript.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="RendererEnabler.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="BlockScript.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="PanelScript.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="MapScript.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="ScoreScript.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
@@ -167,29 +149,11 @@
     <ClInclude Include="GameObject.h">
       <Filter>헤더 파일\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="TetrisGame.h">
-      <Filter>헤더 파일\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="BlockScript.h">
-      <Filter>헤더 파일\Script\TetrisGame</Filter>
-    </ClInclude>
-    <ClInclude Include="MapScript.h">
-      <Filter>헤더 파일\Script\TetrisGame</Filter>
-    </ClInclude>
-    <ClInclude Include="MoveScript.h">
-      <Filter>헤더 파일\Script\TetrisGame</Filter>
-    </ClInclude>
-    <ClInclude Include="ScoreScript.h">
-      <Filter>헤더 파일\Script\TetrisGame</Filter>
-    </ClInclude>
     <ClInclude Include="MainScene.h">
       <Filter>헤더 파일\Scene</Filter>
     </ClInclude>
     <ClInclude Include="MapEditor.h">
       <Filter>헤더 파일\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Button.h">
-      <Filter>헤더 파일\Component</Filter>
     </ClInclude>
     <ClInclude Include="MapEditScript.h">
       <Filter>헤더 파일\Script\MapEditor</Filter>
@@ -198,19 +162,16 @@
       <Filter>헤더 파일\Script\MapEditor</Filter>
     </ClInclude>
     <ClInclude Include="PanelScript.h">
-      <Filter>헤더 파일\Script\Client</Filter>
+      <Filter>헤더 파일\Script\game</Filter>
     </ClInclude>
     <ClInclude Include="Animator.h">
       <Filter>헤더 파일\Component</Filter>
     </ClInclude>
-    <ClInclude Include="HelicopterGame.h">
-      <Filter>헤더 파일\Script\Client</Filter>
-    </ClInclude>
     <ClInclude Include="MoveMapScript.h">
-      <Filter>헤더 파일\Script\Client</Filter>
+      <Filter>헤더 파일\Script\game</Filter>
     </ClInclude>
     <ClInclude Include="PlayerMoveScript.h">
-      <Filter>헤더 파일\Script\Client</Filter>
+      <Filter>헤더 파일\Script\game</Filter>
     </ClInclude>
     <ClInclude Include="Collider.h">
       <Filter>헤더 파일\Component</Filter>
@@ -219,7 +180,13 @@
       <Filter>헤더 파일\Component</Filter>
     </ClInclude>
     <ClInclude Include="boardScript.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Script\game</Filter>
+    </ClInclude>
+    <ClInclude Include="HelicopterGame.h">
+      <Filter>헤더 파일\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>헤더 파일\Engine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
